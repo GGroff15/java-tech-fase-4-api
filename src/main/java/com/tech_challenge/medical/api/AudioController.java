@@ -1,7 +1,7 @@
 package com.tech_challenge.medical.api;
 
 import com.tech_challenge.medical.api.dto.AudioUploadRequest;
-import com.tech_challenge.medical.application.UploadAudioService;
+import com.tech_challenge.medical.application.service.UploadAudioService;
 import com.tech_challenge.medical.domain.AudioUpload;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;

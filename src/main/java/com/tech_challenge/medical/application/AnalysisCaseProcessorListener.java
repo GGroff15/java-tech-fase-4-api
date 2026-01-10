@@ -1,5 +1,6 @@
 package com.tech_challenge.medical.application;
 
+import com.tech_challenge.medical.application.processor.ProcessorService;
 import com.tech_challenge.medical.domain.*;
 import com.tech_challenge.medical.domain.event.AnalysisCaseCreatedEvent;
 import com.tech_challenge.medical.infraestructure.AnalysisCaseRepository;

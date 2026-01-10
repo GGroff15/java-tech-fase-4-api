@@ -1,4 +1,4 @@
-package com.tech_challenge.medical.application;
+package com.tech_challenge.medical.application.text_extractor;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;

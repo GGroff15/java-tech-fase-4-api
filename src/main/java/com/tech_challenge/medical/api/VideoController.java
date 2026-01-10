@@ -1,7 +1,7 @@
 package com.tech_challenge.medical.api;
 
 import com.tech_challenge.medical.api.dto.VideoUploadRequest;
-import com.tech_challenge.medical.application.UploadVideoService;
+import com.tech_challenge.medical.application.service.UploadVideoService;
 import com.tech_challenge.medical.domain.VideoUpload;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;

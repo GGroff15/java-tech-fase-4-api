@@ -1,4 +1,4 @@
-package com.tech_challenge.medical.application;
+package com.tech_challenge.medical.application.processor;
 
 import com.tech_challenge.medical.domain.AnalysisCase;
 import com.tech_challenge.medical.domain.AnalysisResult;
