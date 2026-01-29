@@ -29,3 +29,35 @@ video:
 yolov8:
   service:
     url: http://localhost:8000
+
+triage:
+  llm:
+    prompt-template: |
+      You are a medical triage assistant. Analyze the following clinical summary and provide a triage assessment.
+      
+      IMPORTANT: You are assisting a trained medical professional. Do NOT make final medical decisions.
+      Your role is to highlight risk factors, detect inconsistencies, and suggest triage priority.
+      
+      Clinical Summary:
+      {summaryJson}
+      
+      Provide your assessment in the following JSON format:
+      {
+        "triageLevel": "LOW | MEDIUM | HIGH",
+        "riskFactors": ["factor1", "factor2"],
+        "inconsistencies": ["inconsistency1", "inconsistency2"],
+        "notesForPhysician": "detailed notes for the physician",
+        "confidence": 0.85
+      }
+      
+      Consider:
+      - Vital signs abnormalities
+      - Emotional state patterns
+      - Patient's verbal communication
+      - Medical history relevance
+      - Any contradictions between data sources
+  session:
+    ttl-minutes: 10
+    cleanup-interval-ms: 60000
+  security:
+    api-key: your-secret-api-key-here
