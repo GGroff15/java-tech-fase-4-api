@@ -61,3 +61,8 @@ triage:
     cleanup-interval-ms: 60000
   security:
     api-key: your-secret-api-key-here
+
+logging:
+  level:
+    root: INFO
+    com.tech_challenge.medical: DEBUG

@@ -1,14 +1,14 @@
 package com.tech_challenge.medical.infrastructure.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
-@Component
+@Configuration
 @ConfigurationProperties(prefix = "triage")
 public class TriageProperties {
-    private final Llm llm = new Llm();
-    private final Session session = new Session();
-    private final Security security = new Security();
+    private Llm llm;
+    private Session session;
+    private Security security;
 
     public Llm llm() {
         return llm;
@@ -20,6 +20,18 @@ public class TriageProperties {
 
     public Security security() {
         return security;
+    }
+
+    public void setLlm(Llm llm) {
+        this.llm = llm;
+    }
+
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
+    public void setSecurity(Security security) {
+        this.security = security;
     }
 
     public static class Llm {

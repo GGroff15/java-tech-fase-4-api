@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -36,14 +37,14 @@ class ApiKeyFilterTest {
     @Mock
     TriageProperties.Security securityConfig;
 
+    @InjectMocks
     private ApiKeyFilter filter;
+
     private static final String VALID_API_KEY = "test-api-key-123";
 
     @BeforeEach
     void setUp() {
-        when(properties.security()).thenReturn(securityConfig);
-        when(securityConfig.apiKey()).thenReturn(VALID_API_KEY);
-        filter = new ApiKeyFilter(properties);
+
     }
 
     @Nested
@@ -54,13 +55,13 @@ class ApiKeyFilterTest {
         @DisplayName("allows request with valid API key")
         void allowsValidApiKey() throws Exception {
             // Given
+            when(properties.security()).thenReturn(securityConfig);
+            when(securityConfig.apiKey()).thenReturn(VALID_API_KEY);
             when(request.getRequestURI()).thenReturn("/events/emotion");
             when(request.getHeader("X-API-Key")).thenReturn(VALID_API_KEY);
 
             // When & Then
-            assertDoesNotThrow(() -> 
-                    filter.doFilterInternal(request, response, filterChain)
-            );
+            assertDoesNotThrow(() -> filter.doFilterInternal(request, response, filterChain));
             verify(filterChain).doFilter(request, response);
         }
 
@@ -68,39 +69,39 @@ class ApiKeyFilterTest {
         @DisplayName("rejects request with missing API key")
         void rejectsMissingApiKey() {
             // Given
+            when(properties.security()).thenReturn(securityConfig);
+            when(securityConfig.apiKey()).thenReturn(VALID_API_KEY);
             when(request.getRequestURI()).thenReturn("/events/emotion");
             when(request.getHeader("X-API-Key")).thenReturn(null);
 
             // When & Then
-            assertThrows(InvalidApiKeyException.class, () -> 
-                    filter.doFilterInternal(request, response, filterChain)
-            );
+            assertThrows(InvalidApiKeyException.class, () -> filter.doFilterInternal(request, response, filterChain));
         }
 
         @Test
         @DisplayName("rejects request with invalid API key")
         void rejectsInvalidApiKey() {
             // Given
+            when(properties.security()).thenReturn(securityConfig);
+            when(securityConfig.apiKey()).thenReturn(VALID_API_KEY);
             when(request.getRequestURI()).thenReturn("/events/emotion");
             when(request.getHeader("X-API-Key")).thenReturn("wrong-key");
 
             // When & Then
-            assertThrows(InvalidApiKeyException.class, () -> 
-                    filter.doFilterInternal(request, response, filterChain)
-            );
+            assertThrows(InvalidApiKeyException.class, () -> filter.doFilterInternal(request, response, filterChain));
         }
 
         @Test
         @DisplayName("validates all events sub-paths")
         void validatesAllEventsSubPaths() {
             // Given
+            when(properties.security()).thenReturn(securityConfig);
+            when(securityConfig.apiKey()).thenReturn(VALID_API_KEY);
             when(request.getRequestURI()).thenReturn("/events/transcript");
             when(request.getHeader("X-API-Key")).thenReturn(VALID_API_KEY);
 
             // When & Then
-            assertDoesNotThrow(() -> 
-                    filter.doFilterInternal(request, response, filterChain)
-            );
+            assertDoesNotThrow(() -> filter.doFilterInternal(request, response, filterChain));
         }
     }
 
@@ -115,9 +116,7 @@ class ApiKeyFilterTest {
             when(request.getRequestURI()).thenReturn("/sessions");
 
             // When & Then
-            assertDoesNotThrow(() -> 
-                    filter.doFilterInternal(request, response, filterChain)
-            );
+            assertDoesNotThrow(() -> filter.doFilterInternal(request, response, filterChain));
             verify(filterChain).doFilter(request, response);
         }
 
@@ -128,9 +127,7 @@ class ApiKeyFilterTest {
             when(request.getRequestURI()).thenReturn("/forms/123");
 
             // When & Then
-            assertDoesNotThrow(() -> 
-                    filter.doFilterInternal(request, response, filterChain)
-            );
+            assertDoesNotThrow(() -> filter.doFilterInternal(request, response, filterChain));
             verify(filterChain).doFilter(request, response);
         }
 

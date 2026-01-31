@@ -11,11 +11,17 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.time.Instant;
 
 @RestController
 @RequestMapping("/events")
+@Tag(name = "Events", description = "Event ingestion endpoints (emotion, transcript, object detection)")
 public class EventController {
     private final BufferService bufferService;
 
@@ -24,7 +30,10 @@ public class EventController {
     }
 
     @PostMapping("/emotion")
+    @Operation(summary = "Receive emotion event", description = "Append an emotion event to the session buffer")
+    @ApiResponse(responseCode = "202", description = "Event accepted")
     public ResponseEntity<Void> receiveEmotionEvent(
+            @Parameter(name = "X-Correlation-Id", in = ParameterIn.HEADER, description = "Correlation id for the session", required = true)
             @RequestHeader("X-Correlation-Id") String correlationId,
             @Valid @RequestBody EmotionEventRequest request
     ) {
@@ -41,7 +50,10 @@ public class EventController {
     }
 
     @PostMapping("/transcript")
+    @Operation(summary = "Receive transcript chunk", description = "Append a transcript chunk to the session buffer")
+    @ApiResponse(responseCode = "202", description = "Event accepted")
     public ResponseEntity<Void> receiveTranscriptChunk(
+            @Parameter(name = "X-Correlation-Id", in = ParameterIn.HEADER, description = "Correlation id for the session", required = true)
             @RequestHeader("X-Correlation-Id") String correlationId,
             @Valid @RequestBody TranscriptChunkRequest request
     ) {
@@ -61,7 +73,10 @@ public class EventController {
     }
 
     @PostMapping("/object")
+    @Operation(summary = "Receive object detection", description = "Append an object detection event to the session buffer")
+    @ApiResponse(responseCode = "202", description = "Event accepted")
     public ResponseEntity<Void> receiveObjectDetection(
+            @Parameter(name = "X-Correlation-Id", in = ParameterIn.HEADER, description = "Correlation id for the session", required = true)
             @RequestHeader("X-Correlation-Id") String correlationId,
             @Valid @RequestBody ObjectDetectionRequest request
     ) {

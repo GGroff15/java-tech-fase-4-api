@@ -13,6 +13,7 @@ import java.io.IOException;
 
 @Component
 public class ApiKeyFilter extends OncePerRequestFilter {
+    
     private static final String API_KEY_HEADER = "X-API-Key";
     private static final String EVENTS_PATH = "/events";
 
