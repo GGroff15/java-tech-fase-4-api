@@ -155,7 +155,8 @@ jobs:
             --image="${IMAGE_URL}" \
             --region=${{ env.GCP_REGION }} \
             --platform=managed \
-            --quiet
+            --quiet \
+            --allow-unauthenticated
 
       - name: Get service URL
         id: service-url
