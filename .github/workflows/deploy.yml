@@ -34,7 +34,7 @@ jobs:
           cache: 'maven'
 
       - name: Run tests and build
-        run: ./mvnw clean verify
+        run: mvn clean verify
 
       - name: Upload test results
         if: always()
