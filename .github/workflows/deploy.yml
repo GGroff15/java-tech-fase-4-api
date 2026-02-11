@@ -123,7 +123,7 @@ jobs:
           docker push "${IMAGE_URL}:latest"
           docker push "${IMAGE_URL}:${{ steps.image-tag.outputs.short_sha }}"
           
-          DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' "${IMAGE_URL}:${{ steps.image-tag.outputs.tag }}" | cut -d'@' -f2)
+          DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' "${IMAGE_URL}:${{ steps.image-tag.outputs.tag }}")
           echo "digest=${DIGEST}" >> $GITHUB_OUTPUT
           echo "image_url=${IMAGE_URL}" >> $GITHUB_OUTPUT
 
