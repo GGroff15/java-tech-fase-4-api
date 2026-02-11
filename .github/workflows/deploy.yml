@@ -123,8 +123,10 @@ jobs:
           docker push "${IMAGE_URL}:latest"
           docker push "${IMAGE_URL}:${{ steps.image-tag.outputs.short_sha }}"
           
-          DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' "${IMAGE_URL}:${{ steps.image-tag.outputs.tag }}")
-          echo "digest=${DIGEST}" >> $GITHUB_OUTPUT
+          IMAGE_DIGEST=$(gcloud artifacts docker images describe \
+            "${IMAGE_URL}:${TAG}" \
+            --format='value(image_summary.digest)')
+          echo "digest=${IMAGE_DIGEST}" >> $GITHUB_OUTPUT
           echo "image_url=${IMAGE_URL}" >> $GITHUB_OUTPUT
 
       - name: Build Summary
